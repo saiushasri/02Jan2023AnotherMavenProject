@@ -38,6 +38,18 @@ pipeline {
 			echo 'Project packaging stage'
 			bat label: 'Project packaging', script: '''mvn package'''
 		}
-	} 
+	}
+	stage('Generate HTML report') {
+        cucumber buildStatus: 'UNSTABLE',
+                reportTitle: 'My report',
+                fileIncludePattern: '**/*.json',
+                trendsLimit: 10,
+                classifications: [
+                    [
+                        'key': 'Browser',
+                        'value': 'Firefox'
+                    ]
+                ]
+    } 
   }
 }
