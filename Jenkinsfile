@@ -19,37 +19,16 @@ pipeline {
             jacoco()
 		}
 	}
-	stage('Generate Cucumber report') {
-            steps{
-                 cucumber buildStatus: 'UNSTABLE',
-                      reportTitle: 'My Cucumber Report',
-                      fileIncludePattern: '**/*.json',
-                         trendsLimit: 10,
-                      classifications: [
-                          [
-                              'key': 'Browser',
-                              'value': 'Chrome'
-                          ]
-                      ]
-                  }
-         }
 	stage('Maven Package'){
 		steps{
 			echo 'Project packaging stage'
 			bat label: 'Project packaging', script: '''mvn package'''
 		}
 	}
-	stage('Generate HTML report') {
-        cucumber buildStatus: 'UNSTABLE',
-                reportTitle: 'My report',
-                fileIncludePattern: '**/*.json',
-                trendsLimit: 10,
-                classifications: [
-                    [
-                        'key': 'Browser',
-                        'value': 'Firefox'
-                    ]
-                ]
-    } 
+	post {
+       always {
+           cucumber '**/cucumber.json'
+       }
+   } 
   }
 }
