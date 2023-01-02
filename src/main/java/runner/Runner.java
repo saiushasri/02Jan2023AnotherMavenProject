@@ -12,7 +12,7 @@ import io.cucumber.junit.CucumberOptions;
 
 		glue = "stepDefinitions",
 
-		features = "src/test/java/features",
+		features = "src/main/java/features",
 
 		plugin = { "html:target/cucumber-html-report", "json:target/cucumber.json",
 
