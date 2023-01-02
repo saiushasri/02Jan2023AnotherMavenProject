@@ -19,6 +19,13 @@ pipeline {
             jacoco()
 		}
 	}
+	
+	stage('Maven Package'){
+		steps{
+			echo 'Project packaging stage'
+			bat label: 'Project packaging', script: '''mvn package'''
+		}
+	} 
 	stage('SonarQube'){
 
 		steps{
@@ -32,12 +39,6 @@ pipeline {
 			}
 
    } 
-	stage('Maven Package'){
-		steps{
-			echo 'Project packaging stage'
-			bat label: 'Project packaging', script: '''mvn package'''
-		}
-	} 
   }
   post {
        always {
